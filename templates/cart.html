@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block title %} Shopping Cart {% endblock %}
+
+{% block content %}
+
+    <!-- HER0 -->
+    <section class="screen-top">
+        <img src="#" alt="">
+        <h1>Shopping Cart</h1>
+    </section>
+
+<div class="page">
+     <!-- ORDER -->
+       <section class="shopping-cart">
+        <h2>My Shopping Cart</h2>
+
+        {% for order in cart_data %}
+
+         <!-- ORDER CARD -->
+        <div class="order-card">
+            <h3>My Order #{{ order.order_id }}</h3>
+
+            <div>
+                <h4>Product</h4>
+                <h4>Price</h4>
+                <h4>Quantity</h4>
+                <h4>Sub Total</h4>
+            </div>
+
+            {% for item in order.order_items %}
+
+            <div class="order-item-row" data-item-id="{{ item.item_id }}" data-price="{{ item.price }}">
+
+            <div class="product-info">
+                <img src="{{ item.img_url }}">
+                <p>{{ item.product_name }}</p>
+            </div>
+
+            <div>
+                <p>£{{ item.price }}</p>
+            </div>
+
+            <div class="quantity-controls">
+                <button class="decrease">-</button>
+                <span class="quantity">{{ item.quantity }}</span>
+                <button class="increase">+</button>
+            </div>
+
+            <div>
+                <p class="sub-total">£ <span>{{ item.sub_total }}</span></p>
+            </div>
+
+        </div>
+            {% endfor %}
+
+            <div id="total">
+                <p>Total: £<span id="cart-total">{{ total }}</span></p>
+                <a href="{{ url_for('shopProduce') }}">Continue Shopping</a>
+                <a class="dark-button" href="{{ url_for('checkout') }}">Checkout</a>
+            </div>
+        {% endfor %}
+
+        <p>Want to view your past orders? <a href="{{ url_for('userDashboard')}}">Click Here</a></p>
+        </section>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const cartRows = document.querySelectorAll(".order-item-row");
+
+    // update the totals
+    function updateTotals() {
+        let total = 0;
+
+        document.querySelectorAll(".order-item-row").forEach(row => {
+            const subTotalEl = row.querySelector(".sub-total span");
+            const quantity = parseInt(row.querySelector(".quantity").textContent);
+            const price = parseFloat(row.dataset.price);
+
+            const subTotal = quantity * price;
+            subTotalEl.textContent = subTotal.toFixed(2);
+
+            total += subTotal;
+        });
+
+        const totalEl = document.querySelector("#cart-total");
+        if (totalEl) {
+            totalEl.textContent = total.toFixed(2);
+        }
+    }
+
+    // romove item
+    function removeRow(row, itemId) {
+        fetch("/update-cart", {method: "POST", headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({item_id: itemId, quantity: 0})
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {row.remove(); updateTotals();
+
+                // Optional: empty cart message
+                if (document.querySelectorAll(".order-item-row").length === 0) {
+                    const card = document.querySelector(".order-card");
+                    if (card) {card.innerHTML = "<p>Your cart is empty.</p>";}
+                }
+            } else {
+                alert("Error removing item");
+            }
+        });
+    }
+
+    // update flask
+    function updateCart(itemId, quantity) {
+        fetch("/update-cart", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({item_id: itemId, quantity: quantity})
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                updateTotals();
+            } else {
+                alert("Error updating cart");
+            }
+        });
+    }
+
+    // attatch events
+    cartRows.forEach(row => {
+        const decreaseBtn = row.querySelector(".decrease");
+        const increaseBtn = row.querySelector(".increase");
+        const quantityEl = row.querySelector(".quantity");
+        const itemId = row.dataset.itemId;
+
+        // decrease
+        decreaseBtn.addEventListener("click", () => {
+            let qty = parseInt(quantityEl.textContent);
+            qty -= 1;
+
+            if (qty <= 0) {
+                removeRow(row, itemId);
+            } else {
+                quantityEl.textContent = qty;
+                updateCart(itemId, qty);
+            }
+        });
+
+        // increase
+        increaseBtn.addEventListener("click", () => {
+            let qty = parseInt(quantityEl.textContent);
+            qty += 1;
+
+            quantityEl.textContent = qty;
+            updateCart(itemId, qty);
+        });
+    });
+
+    // initial calculation
+    updateTotals();
+});
+</script>
+
+
+{% endblock %}

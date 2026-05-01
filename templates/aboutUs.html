@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %} About Us {% endblock %}
+
+{% block content %}
+
+    <!-- HER0 -->
+    <section class="hero">
+        <img src="static/waw-hero.jpg" alt="cow image for hero">
+        <h1>About Us</h1>
+    </section>
+
+<div class="page">
+
+    <!-- WHO ARE WE -->
+     <section class="waw-section">
+        <h2 class="waw-title">Who Are We?</h2>
+        <p class="waw-text">A company that advertises local businesses, service providers, and farmers plays an important role in strengthening the community and supporting the local economy. By promoting nearby shops, skilled professionals, and fresh produce from local farms, it helps connect customers with trusted, high-quality services and goods close to home. This not only increases visibility for small enterprises but also encourages people to shop locally, reduce environmental impact, and build stronger relationships within their community.</p>
+     </section>
+
+     <!-- HEALTHY LIVING -->
+      <section class="healthy-living-section">
+
+        <!-- LEFT SIDE -->
+        <div class="healthy-living-left">
+            <img src="static/AU-left.jpg" alt="smiling happy people">
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="healthy-living-right">
+            <h2>Healthy Living</h2>
+            <p>Healthy eating means choosing a balanced diet that includes plenty of fruits, vegetables, whole grains, lean proteins, and healthy fats. It helps your body get the nutrients it needs to function property, boosting energy levels, supporting growth, and reducing the risk of illness. By making mindful food choices and limiting processed foods, you can improve both your physical health and overall well-being.</p>
+            <a class="light-button" href="{{ url_for('shopProduce') }}">Shop Products</a>
+        </div>
+        </section>
+
+        <!-- SUSTAINABLE FARMING -->
+        <section class="sus-farming-section">
+
+        <!-- LEFT SIDE -->
+        <div class="sus-farming-left">
+            <h2>Sustainable Farming</h2>
+            <p>Sustainable farming is an approach to agriculture that focuses on producing food while protecting the environment, supporting local communities, and maintaining economic viability for farmers. It involves practices like crop rotation, reducing chemical use, conserving water, and promoting biodiversity to keep soil healthy and ecosystems balanced. By working with natural processes rather than against them, sustainable farming helps ensure that future generations can continue to grow food without depleting the planet's resources.</p>
+            <a class="light-button" href="{{ url_for('producers') }}">View Farms</a>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="sus-farming-right">
+            <img src="static/AU-right.jpg" alt="tractor farmng crops">
+        </div>
+        </section>
+
+        <!-- PRODUCT HIGHLIGHTS -->
+        <section class="long-values-section">
+            <h2>Our Values</h2>
+
+                <h3>Trust</h3>
+                <p>We build lasting relationships with our customers and partners by delivering consistent quality and reliability.</p>
+
+                <h3>Health</h3>
+                <p>Our focus is on providing fresh, nutritious, and safe products that support the well being of everyone we serve.</p>
+
+                <h3>Community</h3>
+                <p>We actively support local farmers, businesses, and initiatives to strengthen and uplift our neighbourhoods.</p>
+
+                <h3>Ethical Practices</h3>
+                <p>We operate with integrity, treating our workers, partners, and animals fairly and responsibly.</p>
+
+                <h3>Transparency</h3>
+                <p>We openly share our sourcing, processes, and standards so customers always know what goes into their food.</p>
+
+                <h3>Environmental Responsibility</h3>
+                <p>We prioritize sustainable methods that protect natural resources and promote long-term ecological balance.</p>
+
+       </section>
+
+       <section class="long-dyk-section">
+        <h2>Did You Know...</h2>
+
+            <div class="fact">
+                <img src="static/water-icon.svg" alt="water-icon">
+                <p>Sustainable farms can improve water efficiency by up to 50%, helping conserve one of our most important resources.</p>
+            </div>
+
+            <div class="fact">
+                <img src="static/earth-icon.svg" alt="earth icon">
+                <p>Sustainable agriculture methods could help capture up to 10 gigatons of carbon per year, making a major impact on climate change.</p>
+            </div>
+
+            <div class="fact">
+                <img src="static/sun-icon.svg" alt="sun icon">
+                <p>Sustainably managed soil can hold up to 20 times more water, helping farms resist drought and protect food supplies</p>
+            </div>
+
+            <div class="fact">
+                <img src="static/money-icon.svg" alt="money icon">
+                <p>Studies show nature-friendly farms can see up to 45% higher profits, proving sustainability is economically viable too.</p>
+            </div>
+
+            <div class="fact">
+                <img src="static/love-icon.svg" alt="love icon">
+                <p>Sustainable farming can cut pesticide use by up to 80%, reducing harmful chemicals in food and the environment.</p>
+            </div>
+            
+       </section>
+</div>
+
+{% endblock %}

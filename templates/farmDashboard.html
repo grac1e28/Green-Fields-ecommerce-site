@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+
+{% block title %} Farm Dashboard {% endblock %}
+
+{% block content %}
+
+<div class="page">
+    <!-- INTRO -->
+    <section class="screen-top">
+        <h1>Welcome to your dashboard!</h1>
+    </section>
+
+<div class="top-boxes">
+    <!-- REVENUE STATS -->
+     <section class="top-box">
+        <p class="overview-title">Revenue This Month:</p>
+        <p class="revenue">£{{ revenue }}</p>
+     </section>
+
+    <!-- ONGOING ORDERS -->
+     <section class="top-box">
+        <p class="ongoing-orders-title">Ongoing Orders:</p>
+        <p class="ongoing-orders">{{ ongoing_orders }}</p>
+     </section>
+
+    <!-- COMPLETE ORDERS -->
+     <section class="top-box">
+        <p class="complete-orders-title">Completed Orders:</p>
+        <p class="complete-orders">{{ complete_orders }}</p>
+     </section>
+
+    </div>
+
+
+    <!-- FARMERS PRODUCTS -->
+    <section class="product-highlight">
+
+    <h2>My Products</h2>
+
+    <div class="product-highlight-cards">
+
+    {% for product in products %}
+
+    <div class="product-card">
+        <p>Image:</p><img src="{{ product.img_url }}" alt="{{ product.product_name }}">
+        <h3 class="p-name">Name: {{ product.product_name }}</h3>
+        <p class="p-description">Description: {{ product.product_description }}</p><br>
+        <p class="p-stock">Stock: {{ product.stock }}</p>
+        <p class="ph-price">Price: £{{ product.product_price }}</p>
+        <a href="{{ url_for('edit_product', product_id=product.product_id) }}">
+            <button class="dark-button" type="button">Edit Product</button>
+        </a>
+        <form action="{{ url_for('delete_product', product_id=product.product_id) }}" method="POST">
+            <button class="dark-button" type="submit"
+                    onclick="return confirm('Delete this product?');">
+                Delete Product
+            </button>
+        </form>
+    </div>
+    {% endfor %}
+    </div>
+
+    </section>
+    
+    
+    <!-- ADD PRODUCT -->
+    <section>
+    <h2 class="product-header">Add Product</h2>
+
+    <div class="add-product">
+
+        <!-- FORM INPUTS -->
+        <form method="POST" enctype="multipart/form-data">
+
+            <label for="img_url">Upload an image</label></br>
+            <input type="file" name="img_url" id="img_url" required></br>
+
+            <label for="product_name">Enter Product Name</label></br>
+            <input type="text" name="product_name" id="product_name" required></br>
+
+            <label for="product_description">Enter Product Description</label></br>
+            <input type="text" name="product_description" id="product_description" required></br>
+    
+            <label for="stock">Enter Product Stock</label></br>
+            <input type="number" name="stock" id="stock" required></br>
+
+            <label for="product_price">Enter Product Price</label></br>
+            <input type="float" name="product_price" id="product_price" required></br>
+
+            <label for="product_category">Product Category</label>
+
+            <select name="product_category" id="product_category" class="product-drop-down">
+                <option value="vegetable">Vegetable</option>
+                <option value="fruit">Fruit</option>
+                <option value="grains">Grains</option>
+                <option value="protiens">Protiens</option>
+                <option value="dairy">Dairy</option>
+                <option value="fats_and_oils">Fats and Oils</option>
+                <option value="legumes_and_pulses">Legumes and Pulses</option>
+                <option value="other">Other</option>
+            </select><br>
+
+            <button class="dark-button" type="submit">Save</button>
+        </form>
+ 
+    </div>
+
+
+  <!-- ONGOING ORDERS -->
+  <section class="ongoing-orders">
+    <h2>Ongoing Orders</h2>
+
+
+    {% for order in ongoing_orders %}
+    <div class="order-card">
+      <h3 id="order-{{ order.order_id }}" class="order-title">Order - {{ order.order_id }}</h3>
+      
+      <div class="order-content">
+
+        <!-- PRODUCTS -->
+        <div class="products-list">
+        {% for item in order.items %}
+          <div class="product-item">
+            <img src="{{ item.product.img_url }}" alt="{{ item.product_name }}" />
+
+            <div class="product-info">
+              <p class="name">{{ item.product_name }}</p>
+              <p class="desc">{{ item.product.product_description }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- INFO BOX -->
+      <aside class="delivery-box">
+        <p>Delivery Address: {{ order.address }}</p>
+        <p>Expected Delivery: n/a</p>
+        <p>Sub-total: £{{ order.total_price }}</p>
+      </aside>
+
+    </div>
+
+      <!-- PROGRESS BAR -->
+      <div class="progress-wrapper">
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+
+        <div class="progress-steps">
+          <p class="active">Ordered</p>
+          <p>Processing</p>
+          <p>In Transit</p>
+          <p>Delivered</p>
+        </div>
+      </div>
+
+        <div class="trouble">
+          Having trouble with your order? <a href="{{ url_for('home', order_id=order.order_id) }}">Contact Seller</a>
+        </div>
+      
+    </div>
+    {% else %}
+      <p>No ongoing orders found.</p>
+    {% endfor %}
+  </section>
+
+  <!-- COMPLETED ORDERS -->
+  <section class="completed-orders">
+    <h2>Completed Orders</h2>
+
+    {% for order in completed_orders %}
+
+      <div class="order-card">
+
+        <h3>Order - {{ order.order_id }}</h3>
+      
+        <div class="order-card-header">
+          <div>Product</div>
+          <div>Price</div>
+          <div>Quantity</div>
+          <div>Total</div>
+        </div>
+
+        <!-- ITEMS -->
+        {% for item in order.items %}
+
+        <div class="order-item-row">
+
+            <div class="product-info">
+              <img src="{{ item.product.img_url }}" alt="{{ item.product_name }}">
+              {{ item.product_name }}
+            </div>
+
+            <div class="price-col">£{{ item.item_price }}</div>
+            <div class="quantity-col">{{ item.quantity }}</div>
+            <div class="total-col">£{{ (item.item_price * item.quantity) }}</div>
+        </div>
+
+        {% endfor %}
+    
+  </div>
+
+      <div class="sub-total">
+        Total: £{{ order.total_price }}
+      </div>
+  </div>
+
+
+      {% else %}
+        <p>No completed orders found.</p>
+      {% endfor %}
+
+  </div>
+  </section>
+</div>
+
+{% endblock %}

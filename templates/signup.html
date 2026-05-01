@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %} Sign Up {% endblock %}
+
+{% block content %}
+<div class="page">
+
+    <!-- SIGN UP FORM -->
+    <section class="signup">
+        <div class="signup-card">
+            <img class="logo-sl" src="static/logo.png" alt="logo">
+            <h1>Greenfield Local Hub</h1>
+            <h2>Sign Up</h2>
+
+            <!-- FORM INPUTS -->
+            <form method="POST">
+
+                <label for="name">Name:</label></br>
+                <input placeholder="Enter Name" type="text" name="name" id="name" required></br>
+
+        
+                <label for="password">Password:</label>
+                <p>Must include characters and numbers.</p>
+                <input placeholder="Enter Password" type="password" name="password" id="password" required></br>
+
+                <label for="cfmPassowrd">Confirm Password:</label></br>
+                <input placeholder="Confirm Password" type="password" name="cfmPassword" id="cfmPassword" required></br>
+
+                <label for="email">Email:</label></br>
+                <input placeholder="Enter Email" type="email" name="email" id="email" required></br>
+
+                <label id="user-type-label">What Type Of User Are You?</label><br>
+
+                <div class="user-type-container">
+
+                    <label class="user-card">
+                        <input type="radio" id="user" name="user_type" value="user" checked hidden>
+                        <img src="static/user-select.svg" alt="User">
+                        <p>User</p>
+                    </label>
+
+                    <label class="user-card">
+                        <input type="radio" id="farmer" name="user_type" value="farmer" hidden>
+                        <img src="static/farmer-select.svg" alt="Farmer">
+                        <p>Farmer</p>
+                    </label>
+                </div>
+
+                <!-- farmer feilds -->
+                <div id="farmer-fields" style="display: none;">
+                    <input type="text" name="farm-name" placeholder="Farm Name">
+                    <input type="text" name="farm-location" placeholder="Farm Location">
+                    <input type="text" name="farm-description" placeholder="Farm Description">
+                    <input type="file"  id="img-input" name="farm-img">
+                </div>
+
+                <input type="checkbox" id="termsAndConditions" name="terms" value="true" required>
+                <label for="termsAndConditions">I have read and agree to the <a href="{{ url_for('privacyPolicy') }}">Terms Of Service</a> <br> and the <a href="{{ url_for('privacyPolicy') }}">Privacy Policy</a></label><br>
+
+                <button id="signup-button" class="dark-button" type="submit">Sign Up</button>
+            </form>
+            
+            <p>Already have an account? <a href="{{ url_for('login')}}">Log In</a></p> 
+        </div>
+</div>
+    </section>
+
+
+<!-- shows the farmers fields to fill out -->
+<script>
+const farmerRadio = document.getElementById("farmer");
+const userRadio = document.getElementById("user");
+const farmerFields = document.getElementById("farmer-fields");
+
+function toggleFields() {
+    if (farmerRadio.checked) {
+        farmerFields.style.display = "block";
+    } else {
+        farmerFields.style.display = "none";
+    }
+}
+
+farmerRadio.addEventListener("change", toggleFields);
+userRadio.addEventListener("change", toggleFields);
+
+toggleFields();
+</script>
+
+{% endblock %}

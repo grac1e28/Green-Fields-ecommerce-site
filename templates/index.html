@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+    <!-- HER0 -->
+    <section class="hero">
+        <img src="static/index-hero.jpg" alt="tractor image">
+        <h1 class="hero-text">Greenfield Local Hub</h1>
+        <p class="hero-quote">"Great food starts close to home"</p>
+        <a class="white-button" href="{{ url_for('shopProduce') }}">Shop Now</a>
+    </section>
+
+<div class="page">
+
+    <!-- DID YOU KNOW -->
+     <section class="dyk-section">
+
+        <h2 class="dyk-title">Did You Know...</h2>
+        <p class="dyn-text">We now deliver! Check out our shop to order now!</p>
+        <a class="light-button" href="{{ url_for('shopProduce') }}">Shop Products</a>
+     </section>
+
+     <!-- VALUES -->
+    <section class="values-section">
+
+        <!-- LEFT SIDE -->
+        <div class="values-left">
+            <h2 class="values-button">Our Values</h2>
+            <a class="dark-button" href="{{ url_for('aboutUs') }}">Find Out More</a>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="values-right">
+            <p>A sustainable food company prioritizes environmental stewardship, ethical sourcing, and long-term community wellbeing. It focuses on reducing waste, lowering carbon emissions, and using renewable resources throughout its supply chain. Such a company values transparency, ensuring customers know where their food comes from and how it is produced. It also supports fair treatment of farmers and workers, promotes biodiversity, and aims to provide nutritious, responsibly produced food that contributes to both human health and the health of the planet.</p>
+        </div>
+    </section>
+
+    <!-- FARMERS -->
+        <section class="farmers-section">
+
+        <!-- LEFT SIDE -->
+        <div class="farmers-left">
+            <p>Small, local farmers play a vital role in building resilient and sustainable food systems. They often use traditional or low-impact farming methods, support biodiversity, and reduce environmental impact by supplying food over shorter distances. Beyond production, they strengthen local economies by keeping money within the community and fostering direct relationships with consumers. Their work preserves regional food traditions and ensures fresher, seasonal produce, while also promoting a deeper connection between people and the land that feeds them.</p>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="farmers-right">
+            <h2>Our Farmers</h2>
+            <a id="our-farmers-button" class="light-button" href="{{ url_for('producers') }}">Find Out More</a>
+        </div>
+        </section>
+
+      <!-- PRODUCT HIGHLIGHTS -->
+       <section class="product-highlight">
+        <h2>Product Highlights</h2>
+            <div class="product-highlight-cards">
+
+                {% for product in products[:3] %}
+
+                <!-- PRODUCTS -->
+                <div class="product-card">
+                    <img src="{{ product.img_url }}" alt="{{ product.product_name }}">
+                    <h3 class="ph-name">{{ product.product_name }}</h3>
+                    <p class="ph-description">{{ product.product_description }}</p>
+                    <p class="ph-stock">stock: {{ product.stock }}</p>
+                    <p class="ph-price">£{{ product.product_price }}</p>
+                    <a class="dark-button" href="{{ url_for('shopProduce') }}">Buy Now</a>
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+       </section>
+</div>
+
+{% endblock %}

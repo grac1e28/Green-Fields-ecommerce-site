@@ -1,0 +1,15 @@
+-----------  GreenFeilds Local Hub  -------------
+
+This website was created by Software Services Limited for the use of GreenFeilds local Hub.
+
+This project is structured with the base file connecting all pages to the css, as well as containing the header and footer.
+
+CSS file has clear markings of pages in capitals e.g /* USER DASHBOARD */ while also containing further coments for  views advantage.
+
+HTML files are also commented and tabbed for a correct layout view.
+
+Thing to note for future development:
+- Script is currently embedded in html files and not in its own file.
+- Filter section effects all of the product cards
+- Log in system may be more effective if flasks library was used instead
+- Implimenting a map using an API would be ideal for this site.

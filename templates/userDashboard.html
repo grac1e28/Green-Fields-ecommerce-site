@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %} User Dahboard {% endblock %}
+
+{% block content %}
+
+<div class="page">
+
+  <h1 class="screen-top">Welcome to your dashboard, {{ current_user.user_name }}</h1>
+
+  <!-- SUMMERY CARDS -->
+  <div class="top-boxes">
+
+    <div class="top-box">
+      <div class="label">Completed Orders</div>
+      <div class="number">{{ completed_orders|length }}</div>
+    </div>
+
+    <div class="top-box">
+      <div class="label">Ongoing Orders</div>
+      <div class="number">{{ ongoing_orders|length }}</div>
+    </div>
+
+    <div class="top-box">
+      <div class="label">Loyalty Points</div>
+      <div class="number">{{ loyalty_pts }}</div>
+      <a href="{{ url_for('settings') }}"> <img src="static/question.svg" alt="question icon">How Do Loyalty Points Work?</a>
+    </div>
+
+  </div>
+
+  <!-- ONGOING ORDERS -->
+  <section class="ongoing-orders">
+    <h2>Ongoing Orders</h2>
+
+
+    {% for order in ongoing_orders %}
+    <div class="order-card">
+      <h3 id="order-{{ order.order_id }}" class="order-title">Order - {{ order.order_id }}</h3>
+      
+      <div class="order-content">
+
+        <!-- PRODUCTS -->
+        <div class="products-list">
+        {% for item in order.items %}
+          <div class="product-item">
+            <img src="{{ item.product.img_url }}" alt="{{ item.product_name }}" />
+
+            <div class="product-info">
+              <p class="name">{{ item.product_name }}</p>
+              <p class="desc">{{ item.product.product_description }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- INFO BOX -->
+      <aside class="delivery-box">
+        <p>Delivery Address: {{ order.address }}</p>
+        <p>Expected Delivery: n/a</p>
+        <p>Sub-total: £{{ order.total_price }}</p>
+      </aside>
+
+    </div>
+
+      <!-- PROGRESS BAR -->
+      <div class="progress-wrapper">
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+
+        <div class="progress-steps">
+          <p class="active">Ordered</p>
+          <p>Processing</p>
+          <p>In Transit</p>
+          <p>Delivered</p>
+        </div>
+      </div>
+
+        <div class="trouble">
+          Having trouble with your order? <a href="{{ url_for('home', order_id=order.order_id) }}">Contact Seller</a>
+        </div>
+      
+    </div>
+    {% else %}
+      <p>No ongoing orders found.</p>
+    {% endfor %}
+  </section>
+
+  <!-- COMPLETED ORDERS -->
+  <section class="completed-orders">
+    <h2>Completed Orders</h2>
+
+    {% for order in completed_orders %}
+
+      <div class="order-card">
+
+        <h3>Order - {{ order.order_id }}</h3>
+      
+        <div class="order-card-header">
+          <div>Product</div>
+          <div>Price</div>
+          <div>Quantity</div>
+          <div>Total</div>
+        </div>
+
+        <!-- ITEMS -->
+        {% for item in order.items %}
+
+        <div class="order-item-row">
+
+            <div class="product-info">
+              <img src="{{ item.product.img_url }}" alt="{{ item.product_name }}">
+              {{ item.product_name }}
+            </div>
+
+            <div class="price-col">£{{ item.item_price }}</div>
+            <div class="quantity-col">{{ item.quantity }}</div>
+            <div class="total-col">£{{ (item.item_price * item.quantity) }}</div>
+        </div>
+
+        {% endfor %}
+    
+  </div>
+
+      <div class="sub-total">
+        Total: £{{ order.total_price }}
+      </div>
+  </div>
+
+
+      {% else %}
+        <p>No completed orders found.</p>
+      {% endfor %}
+
+  </div>
+  </section>
+</div>
+
+
+    <!-- +++ ADD OPTION TO EDIT -->
+
+{% endblock %}
+
+
+
+

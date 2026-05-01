@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block title %} Checkout {% endblock %}
+
+{% block content %}
+
+<div class="page">
+
+    <h1 class="title">Welcome To checkout</h1>
+
+    <div class="payment-card">
+
+        <p>NOTE: For the sake of this example, some of this data is stored to a database since it does not have secure card processing in place yet. Please use dummy data only.</p>
+
+        <h2>1. Payment:</h2>
+
+        <div class="quick-payment">
+
+            <!-- Payment Links -->
+
+                    <img src="static/visa.png" alt="Visa Logo" class="quick-payment-option">
+
+                    <img src="static/mastercard-removebg-preview.png" alt="Mastercard logo" class="quick-payment-option">
+
+                    <img src="static/gpay.png" alt="Google Pay Logo" class="quick-payment-option">
+
+        </div>
+
+    <!-- Card details -->
+     <form method="POST">
+
+        <label for="fname">Card Holders First Name:</label><br>
+        <input placeholder="Enter First Name" type="text" name="fname" required><br>
+
+        <label for="lname">Last Name:</label><br>
+        <input placeholder="Enter Last Name" type="text" name="lname" required><br>
+
+        <label for="cardNumber">Card Number:</label><br>
+        <input placeholder="Enter Card Number" type="number" name="cardNumber" minlength="13" maxlength="19" required><br>
+
+        <!--
+        Source - https://stackoverflow.com/a/17017602
+        Posted by DACrosby, modified by community. See post 'Timeline' for change history
+        Retrieved 2026-04-20, License - CC BY-SA 4.0
+        -->
+
+        <p>Card Expircation Date:</p>
+        <select name='expireMM' id='expireMM'>
+            <option value=''>Month</option>
+            <option value='01'>January</option>
+            <option value='02'>February</option>
+            <option value='03'>March</option>
+            <option value='04'>April</option>
+            <option value='05'>May</option>
+            <option value='06'>June</option>
+            <option value='07'>July</option>
+            <option value='08'>August</option>
+            <option value='09'>September</option>
+            <option value='10'>October</option>
+            <option value='11'>November</option>
+            <option value='12'>December</option>
+        </select> 
+        <select name='expireYY' id='expireYY'>
+            <option value=''>Year</option>
+            <option value='20'>2026</option>
+            <option value='21'>2027</option>
+            <option value='22'>2028</option>
+            <option value='23'>2029</option>
+            <option value='24'>2030</option>
+        </select> 
+        <input class="inputCard" type="hidden" name="expiry" id="expiry" maxlength="4"/>
+
+        <label for="CVV">Card CVV:</label><br>
+        <input placeholder="Enter CVV" type="number" name="CVV" maxlength="3" minlength="3" required><br>
+
+        <label for="email">Email For Recipt:</label></br>
+        <input placeholder="Enter Email" type="email" name="email" id="email" required></br>
+
+    <!-- Delivery -->
+    <h2>2. Delivery:</h2>
+
+    <div class="delivery-type-container">
+
+            <label class="delivery-card">
+                <input type="radio" id="delivery" name="delivery_type" value="delivery" checked hidden>
+                <img src="static/tractor-logo.svg" alt="Delivery">
+                <p>Delivery</p>
+            </label>
+
+            <label class="delivery-card">
+                <input type="radio" id="pickup" name="delivery_type" value="pickup" hidden>
+                <img src="static/shopping-cart.png" alt="Pickup">
+                <p>Pickup</p>
+            </label>
+        </div>
+
+        <!-- delivery feilds -->
+        <div id="delivery-fields" style="display: none;">
+
+            <label for="postCode">Enter Post Code</label>
+            <input type="text" name="postCode" placeholder="Post Code" minlength="5" maxlength="6">
+            
+            <label for="HouseNumberName">Enter House Number Or Name</label>
+            <input type="text" name="houseNumberName" placeholder="Enter House Number/Name">
+            
+            <label for="streetName">Street Name</label>
+            <input type="text" name="streetName" placeholder="Street Name">
+
+            <label for="county">Enter County</label>
+            <input type="text" name="county" placeholder="Enter County">
+
+            <label for="country">Enter Country</label>
+            <input type="text" name="country" placeholder="Enter Country">
+
+            <p>Preferred Drop Off Time:</p>
+                <select name='timeFrame' id='TimeFrame'>
+                    <option value=''>Time Frame</option>
+                    <option value='07:00 AM - 10:00 AM'>07:00 AM - 10:00 AM</option>
+                    <option value='10:00 AM - 02:00 PM'>10:00 AM - 02:00 PM</option>
+                    <option value='02:00 PM - 06:00 PM'>02:00 PM - 06:00 PM</option>
+                </select> 
+        </div>
+
+        <button class="dark-button" type="submit">Enter</button>
+    </form>
+    </div>
+     
+</div>
+</div>
+    </section>
+
+<!-- Shows thedelivery feilds -->
+<script>
+const deliveryRadio = document.getElementById("delivery");
+const pickupRadio = document.getElementById("pickup");
+const deliveryFields = document.getElementById("delivery-fields");
+
+function toggleDeliveryFields() {
+    if (deliveryRadio.checked) {
+        deliveryFields.style.display = "block";
+    } else {
+        deliveryFields.style.display = "none";
+    }
+}
+
+deliveryRadio.addEventListener("change", toggleDeliveryFields);
+pickupRadio.addEventListener("change", toggleDeliveryFields);
+toggleDeliveryFields();
+</script>
+
+
+
+</div>
+
+{% endblock %}

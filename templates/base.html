@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+</head>
+<body>
+
+    <header>
+        <nav class="nav-bar">
+        <!-- NAV BAR -->
+            <div class="logo"><img src="{{ url_for('static', filename='logo.png') }}" alt="Green Fields Logo"></div>  
+
+            <div class="nav-links">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('aboutUs') }}">About Us</a></li>
+                <li><a href="{{ url_for('producers') }}">Producers</a></li>
+                <li><a href="{{ url_for('shopProduce') }}">Shop Produce</a></li>
+
+                {% if not session.get('is_farmer') %}
+                    <li><a href="{{ url_for('userDashboard') }}">User Dashboard</a></li>
+                {% endif %}
+
+                {% if session.get('is_farmer') %}
+                    <li><a href="{{ url_for('farmDashboard') }}">Farm Dashboard</a></li>
+                {% endif %}
+
+            </div>
+
+            <!-- PFP DROP DOWN -->
+            <div class="profile-menu">
+                <div class="profile-picture"><img src="{{ url_for('static', filename='profile-picture.svg') }}" alt="profile picture"></div>
+
+                <div class="drop-down">
+                    <li><a href="{{ url_for('cart') }}">My Cart</a></li>
+                    <li><a href="{{ url_for('settings') }}">Settings</a></li>
+                    <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+                    <li><a href="{{ url_for('login') }}">Log In</a></li>
+                    <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                </div>
+            </div>
+            
+        </nav>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash flash-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+    </header>
+
+    {% block content %}{% endblock %}
+
+
+
+<!-- SPONSOR LOGOS -->
+<section>
+    <div class="footer-logos">
+        <img src="{{ url_for('static', filename='wheat-logo.svg') }}" alt="wheat logo">
+        <img src="{{ url_for('static', filename='tractor-logo.svg') }}" alt="tractor logo">
+        <img src="{{ url_for('static', filename='egg-logo.svg') }}" alt="egg logo">
+        <img src="{{ url_for('static', filename='cart-logo.svg') }}" alt="cart logo">
+        <img src="{{ url_for('static', filename='avacado-logo.svg') }}" alt="avocado logo">
+        <img src="{{ url_for('static', filename='machine-logo.svg') }}" alt="machine logo">
+    </div>
+</section>
+
+<!-- SOCIAL MEDIA -->
+<section>
+    <div class="socials">
+        <h2>Follow Us</h2>
+
+        <a href="https://x.com/"><img src="{{ url_for('static', filename='x-sm.svg') }}" alt="X logo"></a>
+        <a href="https://www.tiktok.com/explore"><img src="{{ url_for('static', filename='tiktok-sm.svg') }}" alt="TikTok logo"></a>
+        <a href="https://www.instagram.com/?hl=en-gb"><img src="{{ url_for('static', filename='imstagram-sm.svg') }}" alt="Instagram logo"></a>
+        <a href="https://en-gb.facebook.com/"><img src="{{ url_for('static', filename='facebook-sm.svg') }}" alt="Facebook logo"></a>
+        <a href="https://gb.linkedin.com/"><img src="{{ url_for('static', filename='linkedin-sm.svg') }}" alt="LinkedIn logo"></a>
+    </div>
+</section>
+
+    <!-- PAGE FOOTER -->
+    <footer>
+    <div class="bottom-footer">
+        <div class="footer-col">
+            <h3>Pages</h3>
+                <ul>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('aboutUs') }}">About Us</a></li>
+                    <li><a href="{{ url_for('producers') }}">Producers</a></li>
+                    <li><a href="{{ url_for('shopProduce') }}">Shop Produce</a></li>
+                    
+                    {% if not session.get('is_farmer') %}
+                    <li><a href="{{ url_for('userDashboard') }}">User Dashboard</a></li>
+                    {% endif %}
+
+                    {% if session.get('is_farmer') %}
+                    <li><a href="{{ url_for('farmDashboard') }}">Farm Dashboard</a></li>
+                    {% endif %}
+                    <li><a href="{{ url_for('cart') }}">Cart</a></li>
+                </ul>
+        </div>
+
+        <div class="footer-col">
+            <h3>Help</h3>
+                <ul>
+                    <li><a href="{{ url_for('settings') }}">Settings</a></li>
+                    <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+                    <li><a href="{{ url_for('home') }}">Contact Us</a></li>
+                    <li><a href="{{ url_for('settings') }}">Loyalty Scheme</a></li>
+                    <li><a href="{{ url_for('privacyPolicy') }}">Privacy Policy</a></li>
+                    <li><a href="{{ url_for('privacyPolicy') }}">Terms Of Service</a></li>
+                </ul>
+        </div>
+
+        <div class="footer-col-large">
+            <h3>Keep In Touch</h3>
+            <form method="POST">
+                <label for="email">Email</label><br>
+                <input type="email" name="email" id="email" placeholder="Enter Email" required><br>
+                <button class="light-button" type="submit">Subscribe</button>
+            </form>
+        </div>
+    
+    </footer>
+
+<!-- Profile picture drop down script -->
+<script>
+    const profilePic = document.querySelector('.profile-picture');
+    const dropdown = document.querySelector('.drop-down');
+
+    profilePic.addEventListener('click', () => {
+        dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
+    });
+
+    // Close dropdown if click outside
+    document.addEventListener('click', (e) => {
+        if (!profilePic.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.style.display = 'none';
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %} Edit Product {% endblock %}
+
+{% block content %}
+
+<div class="edit-page">
+
+    <h2 class="edit-title">Edit Product</h2>
+
+    <form class="edit-form" method="POST">
+
+        <label class="edit-label">Product Name</label>
+        <input class="edit-input" type="text" name="product_name"
+               value="{{ product.product_name }}" required>
+
+        <label class="edit-label">Description</label>
+        <textarea class="edit-textarea" name="product_description">{{ product.product_description }}</textarea>
+
+        <label class="edit-label">Stock</label>
+        <input class="edit-input" type="number" name="stock"
+               value="{{ product.stock }}">
+
+        <label class="edit-label">Price</label>
+        <input class="edit-input" type="number" step="0.01" name="product_price"
+               value="{{ product.product_price }}">
+
+        <label class="edit-label">Category</label>
+        <input class="edit-input" type="text" name="product_category"
+               value="{{ product.product_category }}">
+
+        <button class="edit-button" type="submit">
+            Save Changes
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

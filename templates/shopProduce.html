@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %} Shop Produce {% endblock %}
+
+{% block content %}
+
+    <!-- HER0 -->
+    <section class="hero">
+        <img src="static/shop-hero.jpg" alt="natural produce for hero">
+        <h1>Shop Produce</h1>
+        <a class="light-button" href="{{ url_for('cart') }}">View Cart</a>
+    </section>
+
+<div class="page">
+
+      <!-- PRODUCT HIGHLIGHTS -->
+       <section class="product-highlight">
+        <h2>Product Highlights</h2>
+            <div class="product-highlight-cards">
+
+                {% for product in products[:3] %}
+
+                <!-- PRODUCTS -->
+                <div class="product-card">
+                    <img src="{{ product.img_url }}" alt="{{ product.product_name }}">
+                    <h3 class="ph-name">{{ product.product_name }}</h3>
+                    <p class="ph-description">{{ product.product_description }}</p>
+                    <p class="ph-stock">stock: {{ product.stock }}</p>
+                    <p class="ph-price">£{{ product.product_price }}</p>
+
+                    <!-- ADD PRODUCT TO ORDER ITEMS -->
+                    <form action="/add-to-cart" method="post">
+                        <input type="hidden" name="product_id" value="{{ product.product_id }}">
+                        <input type="hidden" name="product_name" value="{{ product.product_name }}">
+                        <input type="hidden" name="product_price" value="{{ product.product_price }}">
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="dark-button">Add To Cart</button>
+                    </form>
+
+        </div>
+        {% endfor %}
+       </section>
+
+       <section class="buttons-right">
+
+            <form method="get" action="{{ url_for('shopProduce') }}">
+                <select class="dark-button" name="category" id="filter" onchange="this.form.submit()">
+                    <option value="">Filter</option>
+                    {% for category in categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+            </form>
+
+            <!-- <label for="filter">Filter</label>
+            <select class="dark-button" name="filter" id="filter">
+                {% for category in categories %}
+                <option value="{{ category }}">{{ category }}</option>
+                {% endfor %}
+            </select> -->
+            <a class = "dark-button" href="{{ url_for('cart') }}">View Cart</a>
+
+       </section>
+
+        <!-- ALL PRODUCTS -->
+       <section class="all-products">
+        <h2>All Products</h2>
+            <div class="product-cards">
+
+                {% for product in products %}
+
+                <!-- PRODUCTS -->
+                <div class="product-card">
+                    <img src="{{ product.img_url }}" alt="{{ product.product_name }}">
+                    <h3 class="ph_name">{{ product.product_name }}</h3>
+                    <p class="ph_description">{{ product.product_description }}</p><br>
+                    <p class="ph_stock">stock: {{ product.stock }}</p>
+                    <p class="ph_price">£{{ product.product_price }}</p>
+                    
+                    <!-- ADD PRODUCT TO ORDER ITEMS -->
+                    <form action="/add-to-cart" method="post">
+                        <input type="hidden" name="product_id" value="{{ product.product_id }}">
+                        <input type="hidden" name="product_name" value="{{ product.product_name }}">
+                        <input type="hidden" name="product_price" value="{{ product.product_price }}">
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="dark-button">Add To Cart</button>
+                    </form>
+                </div>
+
+                {% endfor %}
+
+            </div>
+</div>
+        </section>
+
+        
+
+{% endblock %}

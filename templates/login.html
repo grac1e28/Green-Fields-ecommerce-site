@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %} Log In {% endblock %}
+
+{% block content %}
+
+<div class="page">
+    <!-- SIGN UP FORM -->
+    <section class="login">
+        <div class="login-card">
+            <img class="logo-sl" src="static/logo.png" alt="logo">
+            <h1>Greenfield Local Hub</h1>
+            <h2>Log In</h2>
+
+            <!-- FORM INPUTS -->
+            <form method="POST">
+
+                <label for="name">Name</label></br>
+                <input placeholder="Enter Name" type="text" name="name" id="name" required></br>
+            
+                <label for="password">Password</label>
+                <p>Must include characters and numbers.</p>
+                <input placeholder="Enter Password" type="password" name="password" id="password" required></br>
+
+                <label for="email">Email</label></br>
+                <input placeholder="Enter Email" type="email" name="email" id="email" required></br>
+
+                <button class="dark-button" type="submit">Log In</button>
+            </form>
+            
+            <p>Dont have an account? <a href="{{ url_for('signup')}}">Sign Up</a></p>
+            <p><a href="#">Forgot Password</a></p> 
+        </div>
+</div>
+</section>
+
+{% endblock %}

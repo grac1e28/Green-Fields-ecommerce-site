@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %} Producers {% endblock %}
+
+{% block content %}
+
+    <!-- HER0 -->
+    <section class="hero">
+        <img src="static/producers-hero.jpg" alt="green fields with sun">
+        <h1>Producers</h1>
+    </section>
+<div class="page">
+    <!-- OVERVIEW -->
+     <section class="overview">
+        <h2 class="overview-title">Overview</h2>
+        <p class="overview-text">Sustainable farming focuses on producing food in ways that protect the environment, support local communities, and maintain soil health for future generations. It involves practices such as crop rotation, reducing chemical use, conserving water, and promoting biodiversity. By working with natural ecosystems rather than against them, sustainable farms help reduce pollution, improve resilience to climate change, and ensure long-term food security. This approach not only benefits the land and wildlife but also supports farmers by lowering costs and creating more stable, ethical food systems.
+    </p>
+     </section>
+
+     <!-- LOCAL FARMS -->
+    <section class="local-farmers">
+        <h2>Our Local Farmers</h2>
+
+        {% for farm in farms %}
+
+        <!-- FARM CARDS -->
+        <div class="farm-card">
+            <div class="img-left">
+                <img src="{{ farm.img_url }}" alt="{{ farm.farm_name }}">
+            </div>
+            <div class="info-right">
+                <h3 class="farm_name">{{ farm.farm_name }}</h3>
+                <p class="farm_location"><img src="static/location-icon.svg" alt="location icon">{{ farm.farm_location }}</p>
+                <p class="farm_description">{{ farm.farm_description }}</p>
+                <a class="dark-button" href="{{ url_for('shopProduce') }}">View Products</a>
+                <br>
+            </div>
+        </div>
+
+        {% endfor %}
+        </section>
+</div>
+
+{% endblock %}

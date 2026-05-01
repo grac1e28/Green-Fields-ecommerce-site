@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FAQ - Sustainable Food Delivery</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7f6;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid #ddd;
+      padding: 15px 0;
+    }
+
+    .faq-question {
+      font-weight: bold;
+      cursor: pointer;
+      position: relative;
+      padding-right: 20px;
+    }
+
+    .faq-question::after {
+      content: "+";
+      position: absolute;
+      right: 0;
+      font-weight: bold;
+    }
+
+    .faq-item.active .faq-question::after {
+      content: "-";
+    }
+
+    .faq-answer {
+      display: none;
+      margin-top: 10px;
+      color: #555;
+    }
+
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Frequently Asked Questions</h1>
+
+    <p>NOTE: This page was AI generated as placeholder to give the client a brief idea of what this page will hold when customised.</p>
+
+    <div class="faq-item">
+      <div class="faq-question">Where does your food come from?</div>
+      <div class="faq-answer">
+        We source all our products from carefully selected local farms that follow sustainable and ethical farming practices.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">What do you mean by “sustainably farmed”?</div>
+      <div class="faq-answer">
+        Our partner farms prioritise soil health, animal welfare, and low environmental impact methods such as reduced pesticide use and regenerative farming.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">How does delivery work?</div>
+      <div class="faq-answer">
+        Choose your delivery slot at checkout. We deliver directly to your door using eco-friendly packaging and optimized delivery routes to reduce emissions.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Where do you deliver?</div>
+      <div class="faq-answer">
+        We currently deliver to selected regions. Enter your postcode at checkout to confirm availability in your area.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Is your packaging environmentally friendly?</div>
+      <div class="faq-answer">
+        Yes. We use recyclable, compostable, or reusable packaging wherever possible to minimise waste.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Can I change or cancel my order?</div>
+      <div class="faq-answer">
+        Orders can be changed or cancelled up to [X hours] before your scheduled delivery time.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Do you offer subscriptions?</div>
+      <div class="faq-answer">
+        Yes, you can subscribe for regular deliveries and customise your box each week.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">What if something arrives damaged or missing?</div>
+      <div class="faq-answer">
+        Contact our support team within 24 hours, and we’ll arrange a refund or replacement.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">How fresh is the food?</div>
+      <div class="faq-answer">
+        Our produce is harvested shortly before delivery, ensuring maximum freshness and quality.
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const items = document.querySelectorAll(".faq-item");
+
+    items.forEach(item => {
+      item.querySelector(".faq-question").addEventListener("click", () => {
+        item.classList.toggle("active");
+      });
+    });
+  </script>
+</body>
+</html>
